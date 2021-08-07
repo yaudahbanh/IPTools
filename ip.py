@@ -1,5 +1,6 @@
 import random
 import requests
+import os
 from multiprocessing.dummy import Pool
 
 def genip():
@@ -20,8 +21,8 @@ def yoy():
 	lis = input('Your IP List -> ')
 	tol = open(lis, 'r').readlines()
 	for i in tol:
-		cok = i.strip()
-		part = cok.split('.')
+		yaa = i.strip()
+		part = yaa.split('.')
 		a = '.'
 
 		start = 0
@@ -30,31 +31,34 @@ def yoy():
 			for k in range(start, end + 1):
 				ale = part[0] + a + part[1] + a + str(j) + a + str(k)
 				open('ranged.txt', 'a').write(ale+'\n')
-		print(cok, '-> RANGED!!')
+		print(yaa, '-> RANGED!!')
 
 
-def valid(kontol):
+def valid(hayuk):
 
 		try:
-			r = requests.get('http://{}'.format(kontol), timeout=3)
+			r = requests.get('http://{}'.format(hayuk), timeout=3)
 			if r.status_code == 200:
-				print(kontol, '-> LIVE IP')
-				open('liveip.txt', 'a').write(kontol+'\n')
+				print(hayuk, '-> LIVE IP')
+				open('liveip.txt', 'a').write(hayuk+'\n')
+			elif '<title>' in r.text:
+				print(hayuk, '-> LIVE IP')
+				open('liveip.txt', 'a').write(hayuk+'\n')
 			else:
 				pass
 		except Exception:
-			print(kontol, '-> DEAD')
+			print(hayuk, '-> DEAD')
 
 
 
 
 def thread(li):
-	asu = open(li, 'r').read().splitlines()
+	ase = open(li, 'r').read().splitlines()
 	p = Pool(100)
-	p.map(valid, asu)
+	p.map(valid, ase)
 
 if __name__ == "__main__":
-
+	os.system('cls' if os.name == 'nt' else 'clear')
 	print("""
 
 
@@ -81,8 +85,8 @@ if __name__ == "__main__":
 	elif pilih == '2':
 		yoy()
 	elif pilih == '3':
-		tolol = input('Input Your IP LIST -> ')
-		thread(tolol)
+		diem = input('Input Your IP LIST -> ')
+		thread(diem)
 	else:
 		print('No Options!')
 
